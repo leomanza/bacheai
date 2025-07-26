@@ -1,4 +1,4 @@
-import { HardHat, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 
 export default function AboutPage() {
   return (

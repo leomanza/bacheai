@@ -11,7 +11,6 @@ export type PotholeReport = {
   photoUrl: string;
   photoHash: string;
   modelVersion: string;
-  // New fields for pothole analysis
   surfaceArea: number; // in square meters
   approxDimensions: string; // e.g., "30cm x 50cm"
   approxVolume: number; // in cubic meters
