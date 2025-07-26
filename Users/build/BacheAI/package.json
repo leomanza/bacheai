@@ -1,7 +1,7 @@
 {
-  "name": "BacheAI",
+  "name": "bacheai",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "author": "Leandro Manzanal (@leomanzanal)",
   "description": "BacheAI es una app que permite a los ciudadanos reportar baches en las calles.",
   "license": "MIT",
