@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, HardHat, CheckCircle, Bird, Atom, Users } from "lucide-react";
+import { ArrowRight, HardHat, CheckCircle, Bird, Atom, Users, Shield } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -52,7 +52,7 @@ export default function InstitutionalLandingPage() {
                     <div>
                         <h3 className="text-xl font-semibold">Datos con Propósito</h3>
                         <p className="mt-2 text-muted-foreground">
-                            No recolectamos datos, generamos evidencia. Cada reporte es una pieza de un rompecabezas más grande, con el objetivo de impulsar acciones concretas y mejorar la calidad de vida en nuestras comunidades.
+                            No recolectamos datos, generamos evidencia. Cada reporte es una pieza de un rompecabezas más grande, con el objetivo de impulsar acciones concretas y mejorar la calidad de vida.
                         </p>
                     </div>
                 </div>
@@ -69,9 +69,22 @@ export default function InstitutionalLandingPage() {
                 </div>
                  <div className="flex items-start gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground flex-shrink-0">
-                        <ArrowRight className="h-6 w-6" />
+                        <Shield className="h-6 w-6" />
                     </div>
                     <div>
+                        <h3 className="text-xl font-semibold">Privacidad por Diseño</h3>
+                        <p className="mt-2 text-muted-foreground">
+                           Respetamos tu privacidad. Todos los reportes son anónimos. Creamos un alias único (ej: "Vigía Audaz") basado en un hash de tu ID de usuario, protegiendo tu identidad mientras reconocemos tu contribución.
+                        </p>
+                    </div>
+                </div>
+                 <div className="flex items-start gap-4 md:col-span-2 md:justify-center md:text-center md:items-center">
+                   <div className="flex-shrink-0 md:flex-shrink-0">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                        <ArrowRight className="h-6 w-6" />
+                    </div>
+                   </div>
+                    <div className="md:text-left">
                         <h3 className="text-xl font-semibold">Acción Abierta</h3>
                         <p className="mt-2 text-muted-foreground">
                            Nuestros proyectos son de código abierto y los datos generados son un bien público. Fomentamos la transparencia y la colaboración para maximizar el impacto positivo.
