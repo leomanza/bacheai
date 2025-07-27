@@ -179,6 +179,7 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
       approxDimensions,
       approxVolume,
       score,
+      isPothole,
       modelVersion,
       photoDataUri: dataUri,
     };

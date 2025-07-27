@@ -104,7 +104,7 @@ export default function LandingPage() {
             </div>
             <div className="flex justify-center">
               <Image
-                src="https://placehold.co/500x300.png"
+                src="/landing-image.png"
                 data-ai-hint="pothole street"
                 alt="Bache en una calle urbana"
                 width={500}

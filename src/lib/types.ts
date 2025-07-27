@@ -7,6 +7,7 @@ export type PotholeReport = {
   alias: string;
   timestamp: string;
   location: string;
+  isPothole: boolean;
   aiSummary: string;
   photoUrl: string;
   photoHash: string;

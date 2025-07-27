@@ -34,6 +34,7 @@ const ReportSchema = z.object({
   approxDimensions: z.string(),
   approxVolume: z.number(),
   score: z.number().int(),
+  isPothole: z.boolean(),
 });
 
 export async function submitPotholeReport(
