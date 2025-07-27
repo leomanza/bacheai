@@ -1,7 +1,6 @@
-
 'use client';
 
-import type { PigeonReport, LeaderboardEntry } from "@/lib/types";
+import type { PotholeReport, LeaderboardEntry } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -10,33 +9,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trophy, Bird, FileText } from 'lucide-react';
+import { Trophy, FileText, Star } from 'lucide-react';
 import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import type { Dictionary } from "@/lib/i18n";
 
 interface LeaderboardProps {
-  reports: PigeonReport[];
+  reports: PotholeReport[];
   dict: Dictionary["leaderboard"];
 }
 
-const calculateLeaderboard = (reports: PigeonReport[]): LeaderboardEntry[] => {
+const calculateLeaderboard = (reports: PotholeReport[]): LeaderboardEntry[] => {
   if (!reports || reports.length === 0) {
     return [];
   }
 
-  const userStats: { [userId: string]: { totalPigeons: number; reportCount: number; alias: string } } = {};
+  const userStats: { [userId: string]: { totalScore: number; reportCount: number; alias: string } } = {};
 
   reports.forEach(report => {
     if (!userStats[report.userId]) {
       userStats[report.userId] = {
-        totalPigeons: 0,
+        totalScore: 0,
         reportCount: 0,
         alias: report.alias || 'Anónimo',
       };
     }
-    userStats[report.userId].totalPigeons += report.pigeonCount;
+    userStats[report.userId].totalScore += report.score || 0;
     userStats[report.userId].reportCount += 1;
   });
 
@@ -45,7 +44,7 @@ const calculateLeaderboard = (reports: PigeonReport[]): LeaderboardEntry[] => {
       userId,
       ...stats,
     }))
-    .sort((a, b) => b.totalPigeons - a.totalPigeons)
+    .sort((a, b) => b.totalScore - a.totalScore)
     .map((entry, index) => ({
       ...entry,
       rank: index + 1,
@@ -80,8 +79,8 @@ export default function Leaderboard({ reports, dict }: LeaderboardProps) {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[80px] text-center">{dict.headers.rank}</TableHead>
-                <TableHead>{dict.headers.spotter}</TableHead>
-                <TableHead className="text-center">{dict.headers.totalPigeons}</TableHead>
+                <TableHead>{dict.headers.reporter}</TableHead>
+                <TableHead className="text-center">{dict.headers.score}</TableHead>
                 <TableHead className="text-center">{dict.headers.reports}</TableHead>
               </TableRow>
             </TableHeader>
@@ -103,8 +102,8 @@ export default function Leaderboard({ reports, dict }: LeaderboardProps) {
                     <TableCell className="font-medium">{entry.alias}</TableCell>
                     <TableCell className="text-center">
                         <div className="flex items-center justify-center gap-2">
-                            <Bird className="h-4 w-4 text-primary"/>
-                            <span className="font-bold text-lg">{entry.totalPigeons}</span>
+                            <Star className="h-4 w-4 text-primary"/>
+                            <span className="font-bold text-lg">{entry.totalScore}</span>
                         </div>
                     </TableCell>
                     <TableCell className="text-center">

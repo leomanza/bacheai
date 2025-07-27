@@ -1,48 +1,48 @@
-
 export const dictionary = {
   metadata: {
-    title: "Flockia",
-    description: "A citizen science app for counting pigeons and contributing to urban wildlife data.",
+    title: "BacheAI",
+    description: "A citizen science app for reporting potholes and contributing to urban infrastructure data.",
   },
   header: {
-    title: "Flockia",
+    title: "BacheAI",
     home: "Home",
-    report: "Report Sighting",
+    report: "Report Pothole",
     reports: "Reports",
     about: "About",
   },
-  pigeonUploader: {
-    cardTitle: "Report a Pigeon Sighting",
-    cardDescription: "Use your device's camera to report a sighting. This ensures the traceability and location of the report.",
+  potholeUploader: {
+    cardTitle: "Report a Pothole",
+    cardDescription: "Use your device's camera to report a pothole. This ensures the traceability and location of the report.",
     idle: {
-      acceptTerms: "Accept terms and conditions",
-      consent: "I consent to sharing my photo and location data for this citizen science initiative.",
       uploadButton: "Take Photo",
     },
     privacy: {
       title: "How is my data used?",
-      description: "Your email and user information are kept private and never shared. The location of your sighting is used anonymously to create aggregated heatmaps for research purposes. Your contribution is valuable and confidential.",
+      description: "Your email and user information are kept private and never shared. The location of your report is used anonymously to create aggregated heatmaps for infrastructure analysis. Your contribution is valuable and confidential.",
     },
     loading: {
       analyzing: "AI is analyzing your photo...",
       submitting: "Submitting...",
     },
     previewing: {
-      imageAlt: "Pigeon sighting preview",
-      analyzeButton: "Analyze Pigeons",
+      imageAlt: "Pothole preview",
+      analyzeButton: "Analyze Pothole",
     },
     confirming: {
-      imageAlt: "Pigeon sighting",
-      pigeonsDetected: "Pigeons Detected",
+      imageAlt: "Pothole",
+      analysisResults: "Analysis Results",
+      surfaceArea: "Surface Area",
+      approxDimensions: "Approx. Dimensions",
+      approxVolume: "Approx. Volume",
       location: "Location",
       gettingLocation: "Getting location...",
       locationUnavailable: "Unavailable",
-      aiAnalysis: "AI Analysis",
+      aiSummary: "AI Summary",
       discardButton: "Discard",
       submitButton: "Confirm & Submit",
-      noPigeonsFound: {
-        title: "No Pigeons Detected",
-        description: "The AI did not find any pigeons in this photo. Reports can only be submitted if at least one pigeon is detected."
+      noPotholeFound: {
+        title: "No Pothole Detected",
+        description: "The AI could not identify a pothole in this photo. Reports can only be submitted if a pothole is detected."
       },
       locationError: {
         title: "Location Access Required",
@@ -51,7 +51,7 @@ export const dictionary = {
     },
     success: {
       title: "Report Submitted!",
-      description: "Thank you for your contribution to pigeon science!",
+      description: "Thank you for your contribution to improving our city's streets!",
       resetButton: "Submit Another Report",
     },
     error: {
@@ -65,16 +65,12 @@ export const dictionary = {
         },
         submissionFailed: {
             title: "Submission Failed"
-        },
-        locationMissing: {
-            title: "Location missing",
-            description: "Please provide a location for the sighting."
         }
     }
   },
   reportsPage: {
-    title: "Sighting Reports",
-    description: "Aggregated data from all citizen-submitted pigeon sightings.",
+    title: "Pothole Reports",
+    description: "Aggregated data from all citizen-submitted pothole reports.",
     tableView: "Table",
     mapView: "Map",
     leaderboardView: "Leaders"
@@ -82,14 +78,14 @@ export const dictionary = {
   reportTable: {
     exportButton: "Export to CSV",
     noReports: "No reports submitted yet.",
-    photoAlt: "Pigeon sighting",
+    photoAlt: "Pothole report photo",
     anonymous: "Anonymous",
     headers: {
         photo: "Photo",
         dateTime: "Date & Time",
         reporter: "Reporter",
         location: "Location",
-        count: "Count",
+        analysis: "AI Analysis",
         aiDescription: "AI Description"
     }
   },
@@ -98,8 +94,8 @@ export const dictionary = {
       noData: "Not enough data to display the leaderboard.",
       headers: {
           rank: "Rank",
-          spotter: "Spotter",
-          totalPigeons: "Pigeons Counted",
+          reporter: "Reporter",
+          score: "Score",
           reports: "Reports"
       }
   }

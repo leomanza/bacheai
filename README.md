@@ -1,22 +1,21 @@
-# Flockia - AI-powered citizen science for urban birds.
+# BacheAI - AI-powered citizen reporting for street potholes.
 
-Flockia is an app that enables citizens to report urban birds sightings. It ensures that every submission is verifiable, traceable, and scientifically valuable.
+BacheAI empowers citizens to report street potholes, ensuring every submission is verifiable, traceable, and valuable for public works.
 
-This project was inspired by the urban bird monitoring initiative from [INBIOSUR (CONICET-UNS)](https://inbiosur.conicet.gov.ar/proyectopalomas/), and it serves as an independent, unofficial tool to facilitate similar data collection efforts.
-
+This project serves as a tool to facilitate data collection for urban infrastructure maintenance.
 
 ---
 
 ## ✨ Key Features
 
 - **📷 Camera-Only Reporting**: Enforces the use of the device's camera for submissions, ensuring the time and location of the report are authentic.
-- **🤖 AI-Powered Analysis**: Leverages Google's Gemini model via **Genkit** to automatically count the number of birds in a photo and provide a descriptive summary of the scene.
+- **🤖 AI-Powered Analysis**: Leverages Google's Gemini model via **Genkit** to automatically analyze the pothole's approximate surface area, dimensions, and volume from a photo.
 - **📈 Real-time Data Visualization**: Features a live-updating dashboard with a report table, an interactive map with heatmaps (`react-leaflet`), and a user leaderboard.
 - **🔐 Secure Authentication**: Implements a complete authentication flow with Firebase, including mandatory email verification for all users.
 - **🔍 High-Integrity Data Provenance**:
   - **Cryptographic Hashing**: Each submitted photo has its SHA-256 hash stored to verify its integrity and prevent tampering.
   - **AI Model Versioning**: The exact version of the AI model used for analysis is recorded with every report, ensuring scientific reproducibility.
-- **👤 User Profiles & Aliases**: Users have profiles with avatars and are assigned a unique, privacy-preserving alias (e.g., "Audaz Halcón") for public-facing leaderboards.
+- **👤 User Profiles & Aliases**: Users have profiles with avatars and are assigned a unique, privacy-preserving alias for public-facing leaderboards.
 
 ---
 
@@ -24,7 +23,7 @@ This project was inspired by the urban bird monitoring initiative from [INBIOSUR
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **AI Framework**: [Genkit](https://firebase.google.com/docs/genkit)
-- **AI Model**: [Google Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/)
+- **AI Model**: [Google Gemini 2.0 Flash](https://deepmind.google.com/technologies/gemini/)
 - **Backend & Database**: [Firebase](https://firebase.google.com/) (Authentication, Firestore, Cloud Storage)
 - **UI**: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)

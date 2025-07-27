@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bird, Menu, X, List, MapIcon, Info } from "lucide-react";
+import { HardHat, Menu, List, Info } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import AuthButton from "./AuthButton";
 import { Suspense, useState } from "react";
@@ -25,7 +25,7 @@ export default function Header({ dict }: HeaderProps) {
     {
       href: "/reportar",
       label: dict.report,
-      icon: <Bird className="h-5 w-5" />,
+      icon: <HardHat className="h-5 w-5" />,
     },
     {
       href: "/reports",
@@ -44,8 +44,8 @@ export default function Header({ dict }: HeaderProps) {
       <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/flockia-isologo.png"
-            alt="Flockia Isologo"
+            src="/bacheai-isologo.png"
+            alt="BacheAI Isologo"
             width={84}
             height={21}
           />
@@ -81,8 +81,8 @@ export default function Header({ dict }: HeaderProps) {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Image
-                      src="/flockia-isologo.png"
-                      alt="Flockia Isologo"
+                      src="/bacheai-isologo.png"
+                      alt="BacheAI Isologo"
                       width={120}
                       height={30}
                     />

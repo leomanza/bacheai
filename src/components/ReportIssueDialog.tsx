@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -102,7 +101,7 @@ export default function ReportIssueDialog() {
             <DialogHeader>
               <DialogTitle>Reportar un Problema</DialogTitle>
               <DialogDescription>
-                Ayúdanos a mejorar Flockia. Describe el problema que encontraste.
+                Ayúdanos a mejorar BacheAI. Describe el problema que encontraste.
               </DialogDescription>
             </DialogHeader>
 

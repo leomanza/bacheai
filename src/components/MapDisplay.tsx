@@ -1,9 +1,8 @@
-
 'use client';
 
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import type { PigeonReport } from '@/lib/types';
+import type { PotholeReport } from '@/lib/types';
 import L from 'leaflet';
 import 'leaflet.heat';
 import { useEffect, useRef } from 'react';
@@ -53,7 +52,7 @@ const HeatmapLayer = ({ points }: HeatmapLayerProps) => {
 
 
 interface MapDisplayProps {
-  reports: PigeonReport[];
+  reports: PotholeReport[];
 }
 
 export default function MapDisplay({ reports }: MapDisplayProps) {
@@ -62,9 +61,7 @@ export default function MapDisplay({ reports }: MapDisplayProps) {
     const bahiaBlancaCoords: [number, number] = [-38.7183, -62.2661];
 
     useEffect(() => {
-        // This effect hook handles the initialization and cleanup of the map instance
         if (mapContainerRef.current && !mapInstanceRef.current) {
-            // If the container exists and there's no map instance, create one.
             const map = L.map(mapContainerRef.current).setView(bahiaBlancaCoords, 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -73,20 +70,17 @@ export default function MapDisplay({ reports }: MapDisplayProps) {
         }
 
         return () => {
-            // Cleanup function: This will run when the component unmounts.
             if (mapInstanceRef.current) {
-                mapInstanceRef.current.remove(); // Explicitly remove the map instance
-                mapInstanceRef.current = null;  // Clear the ref
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
             }
         };
-    }, []); // Empty dependency array ensures this runs only once on mount and cleanup on unmount
+    }, []);
 
     useEffect(() => {
-        // This effect syncs markers and heatmap with the map instance
         const map = mapInstanceRef.current;
-        if (!map) return; // Do nothing if map is not initialized
+        if (!map) return;
 
-        // Clear existing layers to prevent duplicates on re-render
         map.eachLayer((layer) => {
             if (layer instanceof L.Marker || (layer as any)._heat) {
                 map.removeLayer(layer);
@@ -107,29 +101,26 @@ export default function MapDisplay({ reports }: MapDisplayProps) {
                 const coords = parseLocation(report.location);
                 return coords ? { ...report, coords } : null;
             })
-            .filter((point): point is PigeonReport & { coords: [number, number] } => point !== null);
+            .filter((point): point is PotholeReport & { coords: [number, number] } => point !== null);
 
-        // Add Markers
         validPoints.forEach(point => {
             L.marker(point.coords)
                 .addTo(map)
-                .bindPopup(`<b>${point.pigeonCount} palomas</b><br />Reportado por: ${point.userEmail}<br />Fecha: ${new Date(point.timestamp).toLocaleString()}`);
+                .bindPopup(`<b>Puntaje: ${point.score}</b><br />Reportado por: ${point.alias}<br />Fecha: ${new Date(point.timestamp).toLocaleString()}`);
         });
 
-        // Add Heatmap
-        const heatPoints: [number, number, number][] = validPoints.map(p => [p.coords[0], p.coords[1], p.pigeonCount]);
+        const heatPoints: [number, number, number][] = validPoints.map(p => [p.coords[0], p.coords[1], p.score / 100]); // Normalize score for intensity
         if (heatPoints.length > 0) {
             (L as any).heatLayer(heatPoints, {
-                radius: 25,
-                blur: 15,
+                radius: 20,
+                blur: 30,
                 maxZoom: 18,
                 max: 1.0,
-                gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+                gradient: {0.1: 'blue', 0.4: 'green', 0.7: 'yellow', 1: 'red'}
             }).addTo(map);
         }
 
-    }, [reports]); // Re-run this effect when reports data changes
+    }, [reports]);
 
-  // The container div is now controlled by Leaflet directly via the ref
   return <div ref={mapContainerRef} style={{ height: '100%', width: '100%' }} />;
 }

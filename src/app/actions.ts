@@ -1,25 +1,21 @@
-
 "use server";
 
-import { generatePhotoDescription } from "@/ai/flows/generate-photo-description";
+import { analyzePotholePhoto as analyzePotholePhotoFlow } from "@/ai/flows/analyze-pothole-photo";
 import { db, storage } from "@/lib/firebase";
 import { addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
-import type { PigeonReport, ReportIssueInput } from "@/lib/types";
+import type { PotholeReport, ReportIssueInput } from "@/lib/types";
 import { z } from "zod";
 import { generateAlias } from "@/lib/utils";
 import { createHash } from "crypto";
 import { reportIssue as reportIssueFlow } from "@/ai/flows/report-issue";
 
-export async function analyzePigeonPhoto(photoDataUri: string) {
+export async function analyzePotholePhoto(photoDataUri: string) {
   try {
-    const result = await generatePhotoDescription({ photoDataUri });
-    const description = result.photoDescription;
-    const count = result.pigeonCount;
-    const modelVersion = result.modelVersion;
-    return { success: true, description, count, modelVersion };
+    const result = await analyzePotholePhotoFlow({ photoDataUri });
+    return { success: true, ...result };
   } catch (e: any) {
-    console.error("actions.ts: Caught error in analyzePigeonPhoto:", e);
+    console.error("actions.ts: Caught error in analyzePotholePhoto:", e);
     return { success: false, error: `Failed to analyze photo with AI. Details: ${e.message}` };
   }
 }
@@ -30,22 +26,25 @@ const ReportSchema = z.object({
   alias: z.string(),
   timestamp: z.string().datetime(),
   location: z.string(),
-  pigeonCount: z.number().int(),
-  aiDescription: z.string(),
+  aiSummary: z.string(),
   photoUrl: z.string().url(),
   photoHash: z.string(),
   modelVersion: z.string(),
+  surfaceArea: z.number(),
+  approxDimensions: z.string(),
+  approxVolume: z.number(),
+  score: z.number().int(),
 });
 
-export async function submitPigeonReport(
-  reportData: Omit<PigeonReport, "id" | "alias" | "photoUrl" | "photoHash"> & { photoDataUri: string }
+export async function submitPotholeReport(
+  reportData: Omit<PotholeReport, "id" | "alias" | "photoUrl" | "photoHash"> & { photoDataUri: string }
 ) {
-  // 1. Calculate photo hash from the Data URI
+  // 1. Calculate photo hash
   const photoBuffer = Buffer.from(reportData.photoDataUri.split(",")[1], 'base64');
   const photoHash = createHash('sha256').update(photoBuffer).digest('hex');
   
-  // 2. Upload photo to Storage and get URL
-  const storageRef = ref(storage, `pigeon_reports/${photoHash}.jpg`);
+  // 2. Upload photo to Storage
+  const storageRef = ref(storage, `pothole_reports/${photoHash}.jpg`);
   let photoUrl = "";
   try {
     const uploadResult = await uploadString(storageRef, reportData.photoDataUri, 'data_url', {
@@ -58,19 +57,16 @@ export async function submitPigeonReport(
   }
 
   const finalReportData = {
-    userId: reportData.userId,
-    userEmail: reportData.userEmail,
+    ...reportData,
     alias: generateAlias(reportData.userId),
-    timestamp: reportData.timestamp,
-    location: reportData.location,
-    pigeonCount: reportData.pigeonCount,
-    aiDescription: reportData.aiDescription,
-    modelVersion: reportData.modelVersion,
-    photoUrl: photoUrl,
-    photoHash: photoHash,
+    photoUrl,
+    photoHash,
   };
   
-  const validation = ReportSchema.safeParse(finalReportData);
+  // remove photoDataUri before saving to DB
+  const { photoDataUri, ...dbData } = finalReportData;
+  
+  const validation = ReportSchema.safeParse(dbData);
   if (!validation.success) {
     console.error("Invalid report data:", validation.error.flatten());
     return { success: false, error: "Invalid report data." };
@@ -78,7 +74,7 @@ export async function submitPigeonReport(
 
   try {
     const docRef = await addDoc(collection(db, "reports"), validation.data);
-    const newReport: PigeonReport = {
+    const newReport: PotholeReport = {
       ...validation.data,
       id: docRef.id,
     };
@@ -89,20 +85,20 @@ export async function submitPigeonReport(
   }
 }
 
-export type PigeonReportsResponse = {
+export type PotholeReportsResponse = {
     success: boolean;
-    reports: PigeonReport[];
+    reports: PotholeReport[];
     error?: string;
 }
 
-export async function getPigeonReports(): Promise<PigeonReportsResponse> {
+export async function getPotholeReports(): Promise<PotholeReportsResponse> {
     try {
         const reportsCol = collection(db, "reports");
         const q = query(reportsCol, orderBy("timestamp", "desc"));
         const reportSnapshot = await getDocs(q);
-        const reports: PigeonReport[] = reportSnapshot.docs.map(doc => ({
+        const reports: PotholeReport[] = reportSnapshot.docs.map(doc => ({
             id: doc.id,
-            ...(doc.data() as Omit<PigeonReport, "id">),
+            ...(doc.data() as Omit<PotholeReport, "id">),
         }));
         return { success: true, reports: reports };
     } catch (error) {
@@ -121,7 +117,6 @@ export async function updateUserProfilePhoto(userId: string, photoDataUrl: strin
             contentType: 'image/jpeg'
         });
         const downloadURL = await getDownloadURL(uploadResult.ref);
-        // The updateProfile call will be done on the client
         return { success: true, photoUrl: downloadURL };
     } catch (error: any) {
         console.error("Error updating profile photo:", error);

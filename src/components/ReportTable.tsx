@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { PigeonReport } from "@/lib/types";
+import type { PotholeReport } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -11,13 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Download, User } from "lucide-react";
+import { Download, User, Ruler, AreaChart } from "lucide-react";
 import Image from "next/image";
 import type { Dictionary } from "@/lib/i18n";
 import { Badge } from "./ui/badge";
 
 interface ReportTableProps {
-  reports: PigeonReport[];
+  reports: PotholeReport[];
   dict: Dictionary["reportTable"];
 }
 
@@ -30,25 +30,16 @@ export default function ReportTable({ reports, dict }: ReportTableProps) {
 
   const exportToCSV = () => {
     const headers = [
-      "ID",
-      "User ID",
-      "Alias",
-      "Timestamp",
-      "Location",
-      "Pigeon Count",
-      "AI Description",
-      "Photo URL",
+      "ID", "User ID", "Alias", "Timestamp", "Location",
+      "Surface Area (m^2)", "Dimensions", "Volume (m^3)", "Score",
+      "AI Summary", "Photo URL",
     ];
     const rows = reports.map((report) =>
       [
-        report.id,
-        report.userId,
-        report.alias,
-        report.timestamp,
+        report.id, report.userId, report.alias, report.timestamp,
         `"${report.location.replace(/"/g, '""')}"`,
-        report.pigeonCount,
-        `"${report.aiDescription.replace(/"/g, '""')}"`,
-        report.photoUrl,
+        report.surfaceArea, `"${report.approxDimensions}"`, report.approxVolume, report.score,
+        `"${report.aiSummary.replace(/"/g, '""')}"`, report.photoUrl,
       ].join(",")
     );
 
@@ -56,7 +47,7 @@ export default function ReportTable({ reports, dict }: ReportTableProps) {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "pigeon_reports.csv");
+    link.setAttribute("download", "pothole_reports.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -78,7 +69,7 @@ export default function ReportTable({ reports, dict }: ReportTableProps) {
               <TableHead>{dict.headers.dateTime}</TableHead>
               <TableHead>{dict.headers.reporter}</TableHead>
               <TableHead>{dict.headers.location}</TableHead>
-              <TableHead className="text-center">{dict.headers.count}</TableHead>
+              <TableHead className="text-center">{dict.headers.analysis}</TableHead>
               <TableHead>{dict.headers.aiDescription}</TableHead>
             </TableRow>
           </TableHeader>
@@ -96,7 +87,7 @@ export default function ReportTable({ reports, dict }: ReportTableProps) {
                     <Image
                       src={report.photoUrl}
                       alt={dict.photoAlt}
-                      data-ai-hint="pigeon city"
+                      data-ai-hint="pothole street"
                       width={100}
                       height={75}
                       className="rounded-md object-cover"
@@ -112,11 +103,14 @@ export default function ReportTable({ reports, dict }: ReportTableProps) {
                     </Badge>
                   </TableCell>
                   <TableCell>{report.location}</TableCell>
-                  <TableCell className="font-bold text-center text-lg">
-                    {report.pigeonCount}
+                  <TableCell className="text-center">
+                    <div className="flex flex-col gap-1 items-start text-xs">
+                        <div className="flex items-center gap-1"><AreaChart className="h-3 w-3 text-primary"/> <strong>Área:</strong> {report.surfaceArea.toFixed(2)} m²</div>
+                        <div className="flex items-center gap-1"><Ruler className="h-3 w-3 text-primary"/> <strong>Dim:</strong> {report.approxDimensions}</div>
+                    </div>
                   </TableCell>
                   <TableCell className="max-w-xs truncate">
-                    {report.aiDescription}
+                    {report.aiSummary}
                   </TableCell>
                 </TableRow>
               ))

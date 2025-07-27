@@ -1,23 +1,26 @@
 import { z } from "zod";
 
-export type PigeonReport = {
+export type PotholeReport = {
   id: string;
   userId: string;
   userEmail: string;
   alias: string;
   timestamp: string;
   location: string;
-  pigeonCount: number;
-  aiDescription: string;
+  aiSummary: string;
   photoUrl: string;
   photoHash: string;
   modelVersion: string;
+  surfaceArea: number; // in square meters
+  approxDimensions: string; // e.g., "30cm x 50cm"
+  approxVolume: number; // in cubic meters
+  score: number; // Calculated score for leaderboard
 };
 
 export type LeaderboardEntry = {
   userId: string;
   alias: string;
-  totalPigeons: number;
+  totalScore: number;
   reportCount: number;
   rank: number;
 };

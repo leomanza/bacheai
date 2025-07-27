@@ -7,7 +7,7 @@ import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import ReportTable from '@/components/ReportTable';
 import type { Dictionary } from '@/lib/i18n';
-import type { PigeonReport } from '@/lib/types';
+import type { PotholeReport } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { List, Map, Loader2, Trophy } from 'lucide-react';
@@ -58,7 +58,7 @@ interface ReportsPageContentProps {
 }
 
 export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
-  const [reports, setReports] = useState<PigeonReport[]>([]);
+  const [reports, setReports] = useState<PotholeReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const router = useRouter();
@@ -75,7 +75,7 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
   }, [router]);
   
   useEffect(() => {
-    if (isAuthLoading) return; // Don't fetch data until authentication is confirmed
+    if (isAuthLoading) return;
 
     const reportsCol = collection(db, "reports");
     const q = query(reportsCol, orderBy("timestamp", "desc"));
@@ -83,7 +83,7 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
     const unsubscribeFirestore = onSnapshot(q, (snapshot) => {
         const reportsData = snapshot.docs.map(doc => ({
             id: doc.id,
-            ...(doc.data() as Omit<PigeonReport, "id">),
+            ...(doc.data() as Omit<PotholeReport, "id">),
         }));
         setReports(reportsData);
         setIsLoading(false);

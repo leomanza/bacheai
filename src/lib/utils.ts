@@ -10,15 +10,14 @@ const adjectives = [
   "Elegante", "Leal", "Amistoso", "Gentil", "Grandioso", "Honorable",
   "Intrépido", "Jovial", "Agudo", "Misterioso", "Noble", "Observador",
   "Pacífico", "Rápido", "Silencioso", "Firme", "Confiable", "Vigilante",
-  "Sabio", "Juguetón", "Resplandeciente", "Triunfante", "Urbano"
+  "Sabio", "Juguetón", "Resplandeciente", "Triunfante", "Urbano", "Cívico"
 ];
 
 const nouns = [
-  "Halcón", "Paloma", "Gorrión", "Águila", "Zorzal", "Cardenal",
-  "Vencejo", "Colibrí", "Mirlo", "Búho", "Cernícalo", "Gavilán",
-  "Patrullero", "Vigía", "Explorador", "Guardián", "Mensajero", "Navegante",
-  "Pionero", "Rastreador", "Vagabundo", "Centinela", "Viajero", "Observador",
-  "Cazador", "Correcaminos", "Defensor", "Maestro", "Líder"
+  "Vial", "Urbano", "Fiscalizador", "Ciudadano", "Inspector", "Vigía",
+  "Patrullero", "Guardián", "Explorador", "Defensor", "Justiciero",
+  "Centinela", "Reporteador", "Agente", "Colaborador", "Pionero",
+  "Navegante", "Rastreador", "Maestro", "Líder"
 ];
 
 // Simple hashing function to get a number from a string

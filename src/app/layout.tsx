@@ -7,10 +7,10 @@ import RootLayoutClient from "./layout-client";
 
 
 export const metadata: Metadata = {
-  title: "Flockia",
-  description: "AI-powered citizen science for urban birds",
+  title: "BacheAI",
+  description: "AI-powered citizen science for urban pothole reporting",
   icons: {
-    icon: "/flockia-logo.png"
+    icon: "/bacheai-isologo.png"
   },
 };
 
