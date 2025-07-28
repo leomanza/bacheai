@@ -74,7 +74,7 @@ export default function InstitutionalLandingPage() {
                     <div>
                         <h3 className="text-xl font-semibold">Privacidad por Diseño</h3>
                         <p className="mt-2 text-muted-foreground">
-                           Respetamos tu privacidad. Todos los reportes son anónimos. Creamos un alias único (ej: "Vigía Audaz") basado en un hash de tu ID de usuario, protegiendo tu identidad mientras reconocemos tu contribución.
+                           Se preserva la privacidad de los ciudadanos mediante reportes anónimos. Cada usuario es identificado por un alias único, generado a partir del hash de su userId.
                         </p>
                     </div>
                 </div>
