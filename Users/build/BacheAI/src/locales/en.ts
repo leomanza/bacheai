@@ -10,50 +10,6 @@ export const dictionary = {
     reports: "Reports",
     about: "About",
   },
-  loginForm: {
-    login: {
-      title: "Login",
-      description: "Enter your credentials to access your account.",
-      submitButton: "Login",
-      switchText: "Don't have an account?",
-      switchButton: "Sign up",
-    },
-    register: {
-      title: "Create an Account",
-      description: "Enter your email and password to get started.",
-      submitButton: "Create Account",
-      switchText: "Already have an account?",
-      switchButton: "Login",
-    },
-    form: {
-      email: "Email",
-      password: "Password",
-      forgotPassword: "Forgot your password?",
-    },
-    errors: {
-      title: "Authentication Error",
-      emailNotVerified: "Your email is not verified. Please check your inbox for the verification link.",
-      emailRequiredForReset: "Please enter your email to reset your password.",
-      invalidEmail: "The email address is not valid.",
-      userDisabled: "This user account has been disabled.",
-      userNotFound: "No account found with this email.",
-      wrongPassword: "The password is incorrect.",
-      emailInUse: "This email address is already in use by another account.",
-      tooManyRequests: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
-      default: "An unknown error occurred. Please try again.",
-    },
-    info: {
-      title: "Check your Email",
-      verificationEmailSent: "Registration successful! A verification link has been sent to your email address. Please verify it before logging in.",
-      passwordResetSent: "A password reset link has been sent to your email.",
-    },
-    toasts: {
-      loginSuccess: {
-        title: "Welcome!",
-        description: "You have successfully logged in.",
-      },
-    },
-  },
   potholeUploader: {
     cardTitle: "Report a Pothole",
     cardDescription: "Use your device's camera to report a pothole. This ensures the traceability and location of the report.",
@@ -62,7 +18,7 @@ export const dictionary = {
     },
     privacy: {
       title: "How is my data used?",
-      description: "Your email and user information are kept private and never shared. The location of your report is used anonymously to create aggregated heatmaps for infrastructure analysis. Your contribution is valuable and confidential.",
+      description: "Your identity is anonymous. No personal information is collected. The location of your report is used anonymously to create aggregated heatmaps for infrastructure analysis. Your contribution is valuable and confidential.",
     },
     loading: {
       analyzing: "AI is analyzing your photo...",

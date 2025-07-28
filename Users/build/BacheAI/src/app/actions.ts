@@ -23,7 +23,7 @@ export async function analyzePotholePhoto(photoDataUri: string) {
 
 const ReportSchema = z.object({
   userId: z.string(),
-  userEmail: z.string().email(),
+  userEmail: z.string(),
   alias: z.string(),
   timestamp: z.string().datetime(),
   location: z.string(),

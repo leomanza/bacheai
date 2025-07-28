@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 function AuthButtonSkeleton() {
-  return <Skeleton className="h-10 w-20" />;
+  return <Skeleton className="h-10 w-10 rounded-full" />;
 }
 
 interface HeaderProps {

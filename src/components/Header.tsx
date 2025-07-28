@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { HardHat, Menu, List, Info } from "lucide-react";
+import { HardHat, Menu, List, Info, Home } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import AuthButton from "./AuthButton";
 import { Suspense, useState } from "react";
@@ -11,7 +11,7 @@ import Image from "next/image";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 function AuthButtonSkeleton() {
-  return <Skeleton className="h-10 w-20" />;
+  return <Skeleton className="h-10 w-10 rounded-full" />;
 }
 
 interface HeaderProps {
@@ -22,6 +22,11 @@ export default function Header({ dict }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
+    {
+      href: "/bacheai",
+      label: dict.home,
+      icon: <Home className="h-5 w-5" />,
+    },
     {
       href: "/reportar",
       label: dict.report,

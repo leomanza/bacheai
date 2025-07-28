@@ -10,14 +10,12 @@ import {
   Camera,
   BookOpen,
   ShieldCheck,
-  MailWarning,
   Info,
   MapPinOff,
   Ruler,
   Cuboid,
   AreaChart,
 } from "lucide-react";
-import { onAuthStateChanged, type User } from 'firebase/auth';
 import { analyzePotholePhoto, submitPotholeReport } from "@/app/actions";
 import { useLocation } from "@/hooks/use-location";
 import { Button } from "@/components/ui/button";
@@ -38,9 +36,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import type { Dictionary } from "@/lib/i18n";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { auth } from "@/lib/firebase"; 
-import Link from "next/link";
 import type { PotholeReport } from "@/lib/types";
+import { useAuth } from "@/hooks/use-auth";
 
 type Stage =
   | "idle"
@@ -94,21 +91,12 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
   const [approxVolume, setApproxVolume] = useState(0);
   const [score, setScore] = useState(0);
   const [modelVersion, setModelVersion] = useState("");
-
-  const [user, setUser] = useState<User | null>(null);
-  const [authInitialized, setAuthInitialized] = useState(false);
+  
+  const { user, loading: authLoading } = useAuth();
   const [lastError, setLastError] = useState<string | null>(null);
 
   const { toast } = useToast();
   const location = useLocation();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        setAuthInitialized(true);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleError = (error: string | undefined, stageOnError: Stage) => {
     const errorMessage = error || "An unknown error occurred.";
@@ -163,7 +151,7 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
   };
 
   const handleSubmit = () => {
-    if (!dataUri || !user?.uid || !user?.email || !location.coordinates || !isPothole) return;
+    if (!dataUri || !user?.uid || !location.coordinates || !isPothole) return;
 
     setStage("submitting");
 
@@ -171,7 +159,7 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
 
     const reportData: Omit<PotholeReport, "id" | "alias" | "photoUrl" | "photoHash"> & { photoDataUri: string } = {
       userId: user.uid,
-      userEmail: user.email,
+      userEmail: user.isAnonymous ? `${user.uid}@bache.ai` : (user.email || 'anonymous@bache.ai'),
       timestamp: new Date().toISOString(),
       location: finalLocation,
       aiSummary,
@@ -208,9 +196,8 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
     setLastError(null);
   };
 
-  const isLoading = stage === 'analyzing' || stage === 'submitting';
-  const canUpload = !!user && user.emailVerified;
-  const isLoggedInButNotVerified = !!user && !user.emailVerified;
+  const isLoading = stage === 'analyzing' || stage === 'submitting' || authLoading;
+  const canUpload = !!user;
   const canSubmit = !isLoading && isPothole && !!location.coordinates;
 
   return (
@@ -224,31 +211,11 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="min-h-[320px] flex flex-col justify-center items-center">
-        {!authInitialized && (
+        {authLoading && (
             <Loader2 className="h-8 w-8 animate-spin text-primary"/>
         )}
 
-        {authInitialized && !user && (
-            <Alert>
-                <AlertTriangle className="h-4 w-4" />
-                <AlertTitle>Requiere Inicio de Sesión</AlertTitle>
-                <AlertDescription>
-                    Debes <Link href="/login" className="font-bold underline">iniciar sesión</Link> para poder reportar un bache.
-                </AlertDescription>
-            </Alert>
-        )}
-        
-        {authInitialized && isLoggedInButNotVerified && (
-            <Alert variant="destructive">
-                <MailWarning className="h-4 w-4" />
-                <AlertTitle>Verificación de Correo Requerida</AlertTitle>
-                <AlertDescription>
-                    Debes verificar tu dirección de correo electrónico para poder enviar reportes. Por favor, revisa tu bandeja de entrada o <Link href="/login" className="font-bold underline">inicia sesión de nuevo</Link> para reenviar el correo.
-                </AlertDescription>
-            </Alert>
-        )}
-
-        {stage === "idle" && canUpload && (
+        {stage === "idle" && !authLoading && canUpload && (
           <div className="w-full space-y-4 text-center">
             <div className="w-full px-6">
                 <Accordion type="single" collapsible>
@@ -284,7 +251,7 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
           </div>
         )}
 
-        {(isLoading) && (
+        {(isLoading && stage !== 'idle') && (
             <div className="flex flex-col items-center justify-center gap-4">
                 <Loader2 className="h-16 w-16 animate-spin text-primary"/>
                 <p className="text-lg text-muted-foreground">{stage === 'analyzing' ? dict.loading.analyzing : dict.loading.submitting}</p>

@@ -10,50 +10,6 @@ export const dictionary = {
     reports: "Reportes",
     about: "Acerca de",
   },
-  loginForm: {
-    login: {
-      title: "Iniciar Sesión",
-      description: "Ingresa tus credenciales para acceder a tu cuenta.",
-      submitButton: "Ingresar",
-      switchText: "¿No tienes una cuenta?",
-      switchButton: "Regístrate",
-    },
-    register: {
-      title: "Crear una Cuenta",
-      description: "Ingresa tu correo y contraseña para comenzar.",
-      submitButton: "Crear Cuenta",
-      switchText: "¿Ya tienes una cuenta?",
-      switchButton: "Inicia Sesión",
-    },
-    form: {
-      email: "Correo Electrónico",
-      password: "Contraseña",
-      forgotPassword: "¿Olvidaste tu contraseña?",
-    },
-    errors: {
-      title: "Error de Autenticación",
-      emailNotVerified: "Tu correo no ha sido verificado. Por favor, revisa tu bandeja de entrada para encontrar el enlace de verificación.",
-      emailRequiredForReset: "Por favor, ingresa tu correo para restablecer la contraseña.",
-      invalidEmail: "La dirección de correo electrónico no es válida.",
-      userDisabled: "Esta cuenta de usuario ha sido deshabilitada.",
-      userNotFound: "No se encontró ninguna cuenta con este correo.",
-      wrongPassword: "La contraseña es incorrecta.",
-      emailInUse: "Esta dirección de correo ya está en uso por otra cuenta.",
-      tooManyRequests: "El acceso a esta cuenta ha sido temporalmente deshabilitado debido a muchos intentos de inicio de sesión fallidos. Puedes restaurarlo inmediatamente restableciendo tu contraseña o puedes intentarlo más tarde.",
-      default: "Ocurrió un error desconocido. Por favor, inténtalo de nuevo.",
-    },
-    info: {
-      title: "Revisa tu Correo",
-      verificationEmailSent: "¡Registro exitoso! Se ha enviado un enlace de verificación a tu dirección de correo. Por favor, verifícalo antes de iniciar sesión.",
-      passwordResetSent: "Se ha enviado un enlace para restablecer tu contraseña a tu correo.",
-    },
-    toasts: {
-      loginSuccess: {
-        title: "¡Bienvenido/a!",
-        description: "Has iniciado sesión correctamente.",
-      },
-    },
-  },
   potholeUploader: {
     cardTitle: "Reportar un Bache",
     cardDescription: "Usa la cámara de tu dispositivo para reportar un bache. Esto asegura la trazabilidad y ubicación del reporte.",
@@ -62,7 +18,7 @@ export const dictionary = {
     },
     privacy: {
         title: "¿Cómo se usan mis datos?",
-        description: "Tu correo electrónico e información de usuario se mantienen privados y nunca se comparten. La ubicación de tu reporte se usa de forma anónima para crear mapas de calor agregados para el análisis de infraestructura. Tu contribución es valiosa y confidencial.",
+        description: "Tu identidad es anónima. No se recopila información personal. La ubicación de tu reporte se usa de forma anónima para crear mapas de calor agregados para el análisis de infraestructura. Tu contribución es valiosa y confidencial.",
     },
     loading: {
       analyzing: "La IA está analizando tu foto...",
