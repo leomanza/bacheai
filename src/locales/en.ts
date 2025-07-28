@@ -18,7 +18,7 @@ export const dictionary = {
     },
     privacy: {
       title: "How is my data used?",
-      description: "Your email and user information are kept private and never shared. The location of your report is used anonymously to create aggregated heatmaps for infrastructure analysis. Your contribution is valuable and confidential.",
+      description: "Your identity is anonymous. No personal information is collected. The location of your report is used anonymously to create aggregated heatmaps for infrastructure analysis. Your contribution is valuable and confidential.",
     },
     loading: {
       analyzing: "AI is analyzing your photo...",

@@ -3,7 +3,6 @@ import { z } from "zod";
 export type PotholeReport = {
   id: string;
   userId: string;
-  userEmail: string;
   alias: string;
   timestamp: string;
   location: string;

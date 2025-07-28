@@ -18,7 +18,7 @@ export const dictionary = {
     },
     privacy: {
         title: "¿Cómo se usan mis datos?",
-        description: "Tu correo electrónico e información de usuario se mantienen privados y nunca se comparten. La ubicación de tu reporte se usa de forma anónima para crear mapas de calor agregados para el análisis de infraestructura. Tu contribución es valiosa y confidencial.",
+        description: "Tu identidad es anónima. No se recopila información personal. La ubicación de tu reporte se usa de forma anónima para crear mapas de calor agregados para el análisis de infraestructura. Tu contribución es valiosa y confidencial.",
     },
     loading: {
       analyzing: "La IA está analizando tu foto...",
