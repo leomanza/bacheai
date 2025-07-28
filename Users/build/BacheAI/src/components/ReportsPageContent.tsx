@@ -62,7 +62,7 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
   const { user, loading: isAuthLoading } = useAuth();
 
   useEffect(() => {
-    if (!user) return;
+    if (isAuthLoading) return; // Wait for auth to be ready
 
     const reportsCol = collection(db, "reports");
     const q = query(reportsCol, orderBy("timestamp", "desc"));
@@ -80,7 +80,7 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
     });
 
     return () => unsubscribeFirestore();
-  }, [user]);
+  }, [isAuthLoading]);
 
   
   if (isAuthLoading) {
