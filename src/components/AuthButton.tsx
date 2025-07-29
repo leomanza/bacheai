@@ -66,7 +66,7 @@ export default function AuthButton() {
         {user.isAnonymous && (
             <>
             <DropdownMenuSeparator />
-            <Link href="/perfil" passHref>
+            <Link href="/upgrade" passHref>
                 <DropdownMenuItem className="bg-yellow-100 dark:bg-yellow-900/50 text-yellow-900 dark:text-yellow-300 focus:bg-yellow-200 dark:focus:bg-yellow-900/80 cursor-pointer">
                     <Crown className="mr-2 h-4 w-4 text-yellow-600 dark:text-yellow-400" />
                     <span>¡Conviértete en Permanente!</span>

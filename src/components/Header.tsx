@@ -33,7 +33,7 @@ export default function Header({ dict }: HeaderProps) {
       icon: <HardHat className="h-5 w-5" />,
     },
     {
-      href: "/reportes",
+      href: "/reports",
       label: dict.reports,
       icon: <List className="h-5 w-5" />,
     },

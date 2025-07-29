@@ -3,7 +3,7 @@
 
 import { analyzePotholePhoto as analyzePotholePhotoFlow } from "@/ai/flows/analyze-pothole-photo";
 import { db, storage } from "@/lib/firebase";
-import { addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import type { PotholeReport, ReportIssueInput } from "@/lib/types";
 import { z } from "zod";
@@ -23,7 +23,6 @@ export async function analyzePotholePhoto(photoDataUri: string) {
 
 const ReportSchema = z.object({
   userId: z.string(),
-  userEmail: z.string(),
   alias: z.string(),
   timestamp: z.string().datetime(),
   location: z.string(),
