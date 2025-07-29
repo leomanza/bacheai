@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import ReportTable from '@/components/ReportTable';
@@ -11,7 +13,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { List, Map, Loader2, Trophy } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Leaderboard from './Leaderboard';
-import { useAuth } from '@/hooks/use-auth';
 
 const MapDisplay = dynamic(() => import('@/components/MapDisplay'), {
   ssr: false,
@@ -60,9 +61,16 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
   const [reports, setReports] = useState<PotholeReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading: isAuthLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    if (isAuthLoading) return; // Wait for auth to be ready
+    if (!isAuthLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isAuthLoading, router]);
+
+  useEffect(() => {
+    if (!user) return; // Don't fetch if no user
 
     const reportsCol = collection(db, "reports");
     const q = query(reportsCol, orderBy("timestamp", "desc"));
@@ -80,10 +88,10 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
     });
 
     return () => unsubscribeFirestore();
-  }, [isAuthLoading]);
+  }, [user]);
 
   
-  if (isAuthLoading) {
+  if (isAuthLoading || !user) {
     return <ReportsSkeleton />;
   }
 

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, HardHat, CheckCircle, Bird, Atom, Users, Shield } from "lucide-react";
+import { ArrowRight, HardHat, CheckCircle, Bird, Atom, Users, Shield, UserPlus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -75,6 +75,17 @@ export default function InstitutionalLandingPage() {
                         <h3 className="text-xl font-semibold">Privacidad por Diseño</h3>
                         <p className="mt-2 text-muted-foreground">
                            Se preserva la privacidad de los ciudadanos mediante reportes anónimos. Cada usuario es identificado por un alias único, generado a partir del hash de su userId.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground flex-shrink-0">
+                        <UserPlus className="h-6 w-6" />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Participación Flexible</h3>
+                        <p className="mt-2 text-muted-foreground">
+                            Puedes contribuir de forma anónima o crear una cuenta permanente para acceder a más funciones, como editar tus reportes y competir en la tabla de líderes. ¡Tú eliges tu nivel de participación!
                         </p>
                     </div>
                 </div>

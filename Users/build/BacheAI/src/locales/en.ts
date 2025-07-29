@@ -9,6 +9,7 @@ export const dictionary = {
     report: "Report Pothole",
     reports: "Reports",
     about: "About",
+    profile: "Profile"
   },
   potholeUploader: {
     cardTitle: "Report a Pothole",
@@ -98,5 +99,58 @@ export const dictionary = {
           score: "Score",
           reports: "Reports"
       }
+  },
+  loginForm: {
+    title: {
+      signIn: "Sign In",
+      signUp: "Create Account",
+      forgotPassword: "Reset Password",
+      awaitingVerification: "Verify Your Email",
+      resetSent: "Check Your Inbox"
+    },
+    description: {
+      signIn: "Welcome back! Enter your credentials to continue.",
+      signUp: "Create a permanent account to unlock all features.",
+      forgotPassword: "Enter your email to receive a password reset link.",
+      awaitingVerification: "We've sent a verification link to your email. Please check your inbox and click the link to continue.",
+      resetSent: "A password reset link has been sent to your email address."
+    },
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    button: {
+      signIn: "Sign In",
+      signUp: "Create Account",
+      forgotPassword: "Send Reset Link",
+    },
+    prompt: {
+      signIn: {
+        prefix: "Don't have an account?",
+        link: "Sign up",
+        forgotPassword: "Forgot your password?"
+      },
+      signUp: {
+        prefix: "Already have an account?",
+        link: "Sign In"
+      }
+    },
+    awaitingVerification: {
+        instructions: "We've sent a verification link to your email. Please check your inbox and click it to activate your account.",
+        signInButton: "Back to Sign In"
+    },
+    resetSent: {
+        instructions: "A password reset link has been sent to your email. Please follow the instructions to reset your password.",
+        signInButton: "Back to Sign In"
+    },
+    errors: {
+      'auth/invalid-email': "The email address is not valid.",
+      'auth/user-disabled': "This user account has been disabled.",
+      'auth/user-not-found': "No account found with this email.",
+      'auth/wrong-password': "Incorrect password. Please try again.",
+      'auth/email-already-in-use': "An account with this email already exists.",
+      'auth/weak-password': "The password is too weak. Please use a stronger password.",
+      'auth/requires-recent-login': 'This action is sensitive and requires recent authentication. Please sign in again before retrying.',
+      'auth/credential-already-in-use': 'This email is already associated with another account.',
+      default: 'An unexpected error occurred. Please try again.'
+    }
   }
 };

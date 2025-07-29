@@ -5,7 +5,7 @@ import ReportIssueDialog from "./ReportIssueDialog";
 
 export default function Footer() {
   const twitterHandle = "leomanzanal";
-  const githubRepoUrl = "https://github.com/earthdataprov/BacheAI"; // Updated repo
+  const githubRepoUrl = "https://github.com/earthdataprov/BacheAI";
   const creatorName = "@leomanzanal";
   const creatorImageUrl = "/perfil.jpg";
   const creatorUrl = "https://x.com/leomanzanal";

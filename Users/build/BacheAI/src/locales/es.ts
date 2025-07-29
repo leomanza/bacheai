@@ -9,6 +9,7 @@ export const dictionary = {
     report: "Reportar Bache",
     reports: "Reportes",
     about: "Acerca de",
+    profile: "Perfil"
   },
   potholeUploader: {
     cardTitle: "Reportar un Bache",
@@ -98,5 +99,58 @@ export const dictionary = {
           score: "Puntaje",
           reports: "Reportes"
       }
+  },
+  loginForm: {
+    title: {
+      signIn: "Iniciar Sesión",
+      signUp: "Crear Cuenta",
+      forgotPassword: "Restablecer Contraseña",
+      awaitingVerification: "Verifica tu Email",
+      resetSent: "Revisa tu Correo"
+    },
+    description: {
+      signIn: "¡Bienvenido de nuevo! Ingresa tus credenciales para continuar.",
+      signUp: "Crea una cuenta permanente para desbloquear todas las funciones.",
+      forgotPassword: "Ingresa tu email para recibir un enlace de restablecimiento.",
+      awaitingVerification: "Te hemos enviado un enlace de verificación a tu correo. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para continuar.",
+      resetSent: "Se ha enviado un enlace para restablecer tu contraseña a tu dirección de correo electrónico."
+    },
+    emailLabel: "Correo Electrónico",
+    passwordLabel: "Contraseña",
+    button: {
+      signIn: "Iniciar Sesión",
+      signUp: "Crear Cuenta",
+      forgotPassword: "Enviar Enlace",
+    },
+    prompt: {
+      signIn: {
+        prefix: "¿No tienes una cuenta?",
+        link: "Regístrate",
+        forgotPassword: "¿Olvidaste tu contraseña?"
+      },
+      signUp: {
+        prefix: "¿Ya tienes una cuenta?",
+        link: "Inicia Sesión"
+      }
+    },
+    awaitingVerification: {
+        instructions: "Hemos enviado un enlace de verificación a tu correo. Por favor, revisa tu bandeja de entrada y haz clic para activar tu cuenta.",
+        signInButton: "Volver a Iniciar Sesión"
+    },
+    resetSent: {
+        instructions: "Se ha enviado un enlace para restablecer tu contraseña a tu correo. Sigue las instrucciones para continuar.",
+        signInButton: "Volver a Iniciar Sesión"
+    },
+    errors: {
+      'auth/invalid-email': "La dirección de correo electrónico no es válida.",
+      'auth/user-disabled': "Esta cuenta de usuario ha sido deshabilitada.",
+      'auth/user-not-found': "No se encontró ninguna cuenta con este correo electrónico.",
+      'auth/wrong-password': "Contraseña incorrecta. Por favor, inténtalo de nuevo.",
+      'auth/email-already-in-use': "Ya existe una cuenta con esta dirección de correo electrónico.",
+      'auth/weak-password': "La contraseña es demasiado débil. Por favor, utiliza una contraseña más segura.",
+      'auth/requires-recent-login': 'Esta acción es sensible y requiere autenticación reciente. Por favor, inicia sesión de nuevo antes de reintentar.',
+      'auth/credential-already-in-use': 'Este correo electrónico ya está asociado con otra cuenta.',
+      default: 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.'
+    }
   }
 };
