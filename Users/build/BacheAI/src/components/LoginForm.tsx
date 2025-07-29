@@ -8,7 +8,6 @@ import {
   AuthError,
   EmailAuthProvider,
   createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -35,7 +34,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Mail, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { Dictionary } from "@/lib/i18n";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Alert, AlertDescription } from "./ui/alert";
 
 
 type View = "signIn" | "signUp" | "forgotPassword" | "awaitingVerification" | "resetSent";
@@ -53,7 +52,7 @@ const formSchema = z.object({
 export default function LoginForm({ dict, isConversionFlow = false }: LoginFormProps) {
   const [view, setView] = useState<View>(isConversionFlow ? "signUp" : "signIn");
   const [error, setError] = useState<string | null>(null);
-  const { user, linkAccount } = useAuth();
+  const { user, linkAccount, signInAnon } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -118,11 +117,15 @@ export default function LoginForm({ dict, isConversionFlow = false }: LoginFormP
     setView(newView);
   }
 
+  const titleForView = isConversionFlow ? "Crear Cuenta Permanente" : dict.title[view];
+  const descriptionForView = isConversionFlow ? "Vincula tu perfil anónimo a una cuenta permanente con tu correo y contraseña." : dict.description[view];
+
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">{dict.title[view]}</CardTitle>
-        <CardDescription>{dict.description[view]}</CardDescription>
+        <CardTitle className="text-2xl">{titleForView}</CardTitle>
+        <CardDescription>{descriptionForView}</CardDescription>
       </CardHeader>
       <CardContent>
         {view === "awaitingVerification" ? (
@@ -140,41 +143,68 @@ export default function LoginForm({ dict, isConversionFlow = false }: LoginFormP
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{dict.emailLabel}</FormLabel>
-                    <FormControl>
-                      <Input placeholder="tu@email.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{dict.passwordLabel}</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+               {view !== "forgotPassword" ? (
+                <>
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{dict.emailLabel}</FormLabel>
+                        <FormControl>
+                        <Input placeholder="tu@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{dict.passwordLabel}</FormLabel>
+                        <FormControl>
+                        <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                </>
+               ) : (
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>{dict.emailLabel}</FormLabel>
+                        <FormControl>
+                        <Input placeholder="tu@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+               )}
               {error && (
                 <Alert variant="destructive">
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {dict.button[view]}
-              </Button>
+              
+              {view === 'forgotPassword' ? (
+                <Button onClick={handleForgotPassword} className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {dict.button.forgotPassword}
+                </Button>
+              ) : (
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isConversionFlow ? "Vincular Cuenta" : dict.button[view]}
+                </Button>
+              )}
+
             </form>
           </Form>
         )}
@@ -182,15 +212,21 @@ export default function LoginForm({ dict, isConversionFlow = false }: LoginFormP
         {!isConversionFlow && (
         <div className="mt-4 text-center text-sm">
           {view === "signIn" && (
-            <>
-              {dict.prompt.signIn.prefix}
-              <Button variant="link" onClick={() => handleSwitchView("signUp")}>
-                {dict.prompt.signIn.link}
-              </Button>
-               <Button variant="link" onClick={() => handleSwitchView("forgotPassword")}>
-                {dict.prompt.signIn.forgotPassword}
-              </Button>
-            </>
+            <div className="flex flex-col gap-2">
+                <div>
+                    {dict.prompt.signIn.prefix}
+                    <Button variant="link" onClick={() => handleSwitchView("signUp")}>
+                        {dict.prompt.signIn.link}
+                    </Button>
+                </div>
+                <Button variant="link" onClick={() => handleSwitchView("forgotPassword")}>
+                    {dict.prompt.signIn.forgotPassword}
+                </Button>
+                <div className="mt-2 text-muted-foreground">o</div>
+                <Button variant="secondary" onClick={signInAnon} className="w-full">
+                    Continuar como Anónimo
+                </Button>
+            </div>
           )}
           {view === "signUp" && (
             <>
@@ -201,9 +237,8 @@ export default function LoginForm({ dict, isConversionFlow = false }: LoginFormP
             </>
           )}
            {view === "forgotPassword" && (
-             <Button variant="link" onClick={handleForgotPassword} disabled={isSubmitting}>
-                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {dict.button.forgotPassword}
+             <Button variant="link" onClick={() => handleSwitchView("signIn")}>
+                Volver a Iniciar Sesión
              </Button>
           )}
         </div>

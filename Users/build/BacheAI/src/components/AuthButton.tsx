@@ -17,10 +17,9 @@ import { LogOut, User as UserIcon, Crown } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { generateAlias } from '@/lib/utils';
 import Link from 'next/link';
-import { Badge } from './ui/badge';
 
 export default function AuthButton() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading, signOut, signInAnon } = useAuth();
   const [alias, setAlias] = useState('');
 
   useEffect(() => {
@@ -35,9 +34,12 @@ export default function AuthButton() {
 
   if (!user) {
     return (
-        <Button asChild>
-            <Link href="/login">Iniciar Sesión</Link>
-        </Button>
+        <div className="flex items-center gap-2">
+            <Button onClick={signInAnon}>Ingreso Anónimo</Button>
+            <Button asChild variant="outline">
+                <Link href="/login">Iniciar Sesión</Link>
+            </Button>
+        </div>
     )
   }
 

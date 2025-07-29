@@ -72,6 +72,7 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
   useEffect(() => {
     if (!user) return; // Don't fetch if no user
 
+    setIsLoading(true);
     const reportsCol = collection(db, "reports");
     const q = query(reportsCol, orderBy("timestamp", "desc"));
     
