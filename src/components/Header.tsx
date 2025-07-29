@@ -23,7 +23,7 @@ export default function Header({ dict }: HeaderProps) {
 
   const navLinks = [
     {
-      href: "/bacheai",
+      href: "/",
       label: dict.home,
       icon: <Home className="h-5 w-5" />,
     },

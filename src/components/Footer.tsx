@@ -5,7 +5,7 @@ import ReportIssueDialog from "./ReportIssueDialog";
 
 export default function Footer() {
   const twitterHandle = "leomanzanal";
-  const githubRepoUrl = "https://github.com/earthdataprov/Flockia";
+  const githubRepoUrl = "https://github.com/earthdataprov/BacheAI";
   const creatorName = "@leomanzanal";
   const creatorImageUrl = "/perfil.jpg";
   const creatorUrl = "https://x.com/leomanzanal";
@@ -25,7 +25,7 @@ export default function Footer() {
             />
           </Link>
           <div>
-            <p className="text-muted-foreground">Creado por</p>
+            <p className="text-muted-foreground">Un proyecto de</p>
             <a
               href={creatorUrl}
               target="_blank"
