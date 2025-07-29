@@ -159,6 +159,7 @@ export default function PotholeUploader({ dict }: PotholeUploaderProps) {
 
     const reportData: Omit<PotholeReport, "id" | "alias" | "photoUrl" | "photoHash"> & { photoDataUri: string } = {
       userId: user.uid,
+      userEmail: user.isAnonymous ? `${user.uid}@bache.ai` : (user.email || 'anonymous@bache.ai'),
       timestamp: new Date().toISOString(),
       location: finalLocation,
       aiSummary,

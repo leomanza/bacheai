@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import ReportTable from '@/components/ReportTable';
 import type { Dictionary } from '@/lib/i18n';
 import type { PotholeReport } from '@/lib/types';
@@ -60,23 +60,19 @@ interface ReportsPageContentProps {
 export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
   const [reports, setReports] = useState<PotholeReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const { user, loading: isAuthLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthLoading(false);
-      } else {
-        router.push('/login');
-      }
-    });
-    return () => unsubscribeAuth();
-  }, [router]);
-  
-  useEffect(() => {
-    if (isAuthLoading) return;
+    if (!isAuthLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isAuthLoading, router]);
 
+  useEffect(() => {
+    if (!user) return; // Don't fetch if no user
+
+    setIsLoading(true);
     const reportsCol = collection(db, "reports");
     const q = query(reportsCol, orderBy("timestamp", "desc"));
     
@@ -93,10 +89,10 @@ export default function ReportsPageContent({ dict }: ReportsPageContentProps) {
     });
 
     return () => unsubscribeFirestore();
-  }, [isAuthLoading]);
+  }, [user]);
 
   
-  if (isAuthLoading) {
+  if (isAuthLoading || !user) {
     return <ReportsSkeleton />;
   }
 
