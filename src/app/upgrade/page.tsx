@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Shield, Crown, Edit, UserCheck } from 'lucide-react';
+import { Loader2, ShieldCheck, Crown, Activity, Flag } from 'lucide-react';
 import { getDictionary } from '@/lib/i18n';
 import LoginForm from '@/components/LoginForm';
 
@@ -53,24 +53,24 @@ export default function UpgradePage() {
                     <h3 className="text-lg font-semibold">Ventajas de registrarte:</h3>
                     <ul className="space-y-3">
                         <li className="flex items-start gap-3">
-                            <Edit className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
+                            <ShieldCheck className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
                             <div>
-                                <span className="font-semibold">Edita tus Aportes</span>
-                                <p className="text-sm text-muted-foreground">Corrige o ajusta las medidas y descripciones de tus reportes después de enviarlos.</p>
+                                <span className="font-semibold">Verifica y Modera Reportes</span>
+                                <p className="text-sm text-muted-foreground">Ayuda a la comunidad reportando baches como solucionados o incorrectos. Tu validación es clave.</p>
                             </div>
                         </li>
                         <li className="flex items-start gap-3">
-                             <UserCheck className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
+                             <Activity className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
                              <div>
-                                <span className="font-semibold">Gana Puntos y Sube de Nivel</span>
-                                <p className="text-sm text-muted-foreground">Acumula puntos por cada reporte validado y compite en la tabla de líderes.</p>
+                                <span className="font-semibold">Sigue tus Reportes y Gana Puntos</span>
+                                <p className="text-sm text-muted-foreground">Activa el "modo seguimiento" para documentar la evolución de un bache y gana más puntos por tu constancia.</p>
                             </div>
                         </li>
                          <li className="flex items-start gap-3">
-                             <Shield className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
+                             <Flag className="h-5 w-5 text-primary mt-1 flex-shrink-0"/>
                              <div>
-                                <span className="font-semibold">Conserva tu Identidad</span>
-                                <p className="text-sm text-muted-foreground">Mantén tu alias y todo tu historial de reportes de forma segura bajo tu nueva cuenta.</p>
+                                <span className="font-semibold">Participa en Campañas Exclusivas</span>
+                                <p className="text-sm text-muted-foreground">Accede a campañas de reporte zonificadas con objetivos y recompensas especiales.</p>
                             </div>
                         </li>
                     </ul>
