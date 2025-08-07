@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import { getStorage, type FirebaseStorage } from "firebase/storage";
+import { getAnalytics, type Analytics } from "firebase/analytics";
 import { config } from "dotenv";
 
 config(); // Load environment variables
@@ -30,4 +31,15 @@ auth.languageCode = 'es';
 const db: Firestore = getFirestore(app);
 const storage: FirebaseStorage = getStorage(app);
 
-export { app, auth, db, storage };
+let analytics: Analytics | undefined;
+if (typeof window !== "undefined" && firebaseConfig.measurementId) {
+  analytics = getAnalytics(app);
+}
+if (analytics) {
+  console.log('Firebase Analytics initialized');
+} else {
+  console.log('Analytics not initialized (probably SSR or localhost)');
+}
+
+
+export { app, auth, db, storage, analytics };
